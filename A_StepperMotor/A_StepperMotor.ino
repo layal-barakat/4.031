@@ -12,10 +12,10 @@
 #define STEP 4  // 4 for full step, 8 for half step, explanation here: https://www.motioncontrolonline.org/content-detail.cfm/Motion-Control-Application-Case-Studies/What-is-the-difference-between-full-stepping-the-half-stepping-and-the-micro-drive/content_id/3192
 
 // Motor pin definitions
-#define motorPin1  8     // IN1 on the ULN2003 driver 1
-#define motorPin2  9     // IN2 on the ULN2003 driver 1
-#define motorPin3  10     // IN3 on the ULN2003 driver 1
-#define motorPin4  11     // IN4 on the ULN2003 driver 1
+#define motorPin1  13     // IN1 on the ULN2003 driver 1
+#define motorPin2  12     // IN2 on the ULN2003 driver 1
+#define motorPin3  11     // IN3 on the ULN2003 driver 1
+#define motorPin4  10     // IN4 on the ULN2003 driver 1
 
 AccelStepper stepper1(STEP, motorPin1, motorPin3, motorPin2, motorPin4);
 
