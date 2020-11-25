@@ -17,6 +17,7 @@ Servo myservo;  // create servo object to control a servo
 // twelve servo objects can be created on most boards
 
 int pos = 0;    // variable to store the servo position
+int rev = 0;
 /////////
 
 #define STEP 4  // 4 for full step, 8 for half step, explanation here: https://www.motioncontrolonline.org/content-detail.cfm/Motion-Control-Application-Case-Studies/What-is-the-difference-between-full-stepping-the-half-stepping-and-the-micro-drive/content_id/3192
@@ -42,39 +43,56 @@ void setup()
   Serial.begin(9600);
   
    stepper1.setMaxSpeed(600);       // Sets the maximum permitted speed.  If your motors starts behaving erratically, lower this number. 600 seemed to be the limit for me.
-   stepper1.setAcceleration(200.0); // Ramp up and ramp down. 
-   stepper1.moveTo(position);
    stepper1.setSpeed(400);         // Sets the speed. Positive numbers rotate clockwise. Negative numbers rotate counter-clockwise.
    myservo.attach(6);  // attaches the servo on pin 12 to the servo object
-
+//   unsigned long previousMillis = 0;        // will store last time LED was updated
+//   long OnTime = 250;           // milliseconds of on-time
+//   long OffTime = 750;          // milliseconds of off-time
 }
 
 void loop()
 {  
-   
-   stepper1.run();
+
+   stepper1.runSpeed();
    Serial.println(stepper1.currentPosition());
+   Serial.println(pos);
 
-   // Flip rotation direction once done
-   if (stepper1.currentPosition() == position) {
-    stepper1.moveTo(0);
+//   // Flip rotation direction once done
+//   if (stepper1.currentPosition() == position) {
+//    stepper1.moveTo(0);
+//   }
+//   // Then flip again
+//   if (stepper1.currentPosition() == 0) {
+//    stepper1.moveTo(position);
+//   }
+
+   if (rev==0){ 
+    if (pos==140) {
+      rev=1;
+      pos-=1;
+      myservo.write(pos);
+    }
+    else{pos+=1;}
    }
-   // Then flip again
-   if (stepper1.currentPosition() == 0) {
-    stepper1.moveTo(position);
+   else {
+    if (pos==0){
+      rev=0;
+      pos+=1;
+    }
+    else{pos-=1;}
    }
+//   // check to see if it's time to change the state of the LED
+//   unsigned long currentMillis = millis();
+// 
+//   if(currentMillis - previousMillis >= OnTime)
+//   {
+//     ledState = LOW;  // Turn it off
+//     previousMillis = currentMillis;  // Remember the time
+//     digitalWrite(ledPin, ledState);  // Update the actual LED
+//   }
 
-//   for (pos = 20; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
-//    // in steps of 1 degree
-//    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-//    delay(50);                       // waits 15ms for the servo to reach the position
-//  }
-//  for (pos = 140; pos >= 20; pos -= 1) { // goes from 180 degrees to 0 degrees
-//    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-//    delay(50);                       // waits 15ms for the servo to reach the position
-//  }
-}
-
+ //  myservo.write(pos);
+   }  
 
 
 /*
