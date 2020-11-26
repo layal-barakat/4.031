@@ -29,11 +29,14 @@ void setup() {
 }
  
 void loop() {
-  Serial.println("Hello");
+  //Serial.println("Hello");
   // read the sensor value:
   int sensorReading = analogRead(SPEED_CONTROL);
+  Serial.println(sensorReading);
   // map it to a range from 0 to 100:
-  int motorSpeed = map(sensorReading, 0,10000, 0, 75);
+  int motorSpeed = map(sensorReading, 0,1023, 5, 10);
+  Serial.println(motorSpeed);
+
   // set the motor speed:
   if (motorSpeed > 0) {
     stepper_NEMA17.setSpeed(motorSpeed);
@@ -44,21 +47,21 @@ void loop() {
   //check current time for servo
   //Serial.println(pos);
   int pot = analogRead(interval);
-  Serial.println(pot);
+  //Serial.println(pot);
   // map it to a range from 0 to 100:
-  int lendelay = map(pot, 0,3000, 0, 100);
-  //Serial.println(lendelay);
+  int lendelay = map(pot, 0,1024, 7, 40);
+  Serial.println(lendelay);
   // set the motor speed:
   if (lendelay > 0) {
     inter = lendelay;}
   unsigned long current = millis();
-  if (pot>1000){return;}
+  if (lendelay>38){return;}
   if (current - prev >= inter) {
     // save the last time you blinked the LED
     prev = current;
 
     if (rev==0){ 
-      if (pos==140) {
+      if (pos==80) {
         rev=1;
         pos-=1;
         //myservo.write(pos);
