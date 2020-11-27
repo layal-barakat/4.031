@@ -49,13 +49,13 @@ void loop() {
   int pot = analogRead(interval);
   //Serial.println(pot);
   // map it to a range from 0 to 100:
-  int lendelay = map(pot, 0,1024, 7, 40);
+  int lendelay = map(pot, 0,1024, 7,80);
   Serial.println(lendelay);
   // set the motor speed:
   if (lendelay > 0) {
     inter = lendelay;}
   unsigned long current = millis();
-  if (lendelay>38){return;}
+  //if (lendelay>38){return;}
   if (current - prev >= inter) {
     // save the last time you blinked the LED
     prev = current;
