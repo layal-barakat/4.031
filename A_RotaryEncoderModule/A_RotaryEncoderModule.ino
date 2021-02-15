@@ -24,6 +24,7 @@ void setup()
 {
   Serial.begin(57600);
   Serial.println("SimplePollRotator example for the RotaryEncoder library.");
+  pinMode(7, INPUT);
 } 
 
 
@@ -38,5 +39,7 @@ void loop()
     Serial.print(newPos);
     Serial.println();
     pos = newPos;
+    if (digitalRead(7)==LOW){Serial.println("YES");}
+    
   } 
 } 

@@ -7,7 +7,7 @@ Servo myservo;  // create servo object to control a servo
 unsigned long prev = 0;
 const int interval = A1;
 int movenum = 0;
-int pos = 0;
+int pos = 25;
 int rev = 0;
 int inter = 0;
  
@@ -17,15 +17,15 @@ const int SPEED_CONTROL = A0;
  
 // Create Instance of Stepper Class
 // Specify Pins used for motor coils
-// The pins used are 13, 12, 11, 10
+// The pins used are 12, 11, 10, 9
 // Connected to L298N Motor Driver In1, In2, In3, In4 
 // Pins entered in sequence 1-2-3-4 for proper step sequencing
  
-Stepper stepper_NEMA17(STEPS_PER_REV, 13, 12, 11, 10);
+Stepper stepper_NEMA17(STEPS_PER_REV, 12, 11, 10, 9);
  
 void setup() {
   Serial.begin(9600);
-  myservo.attach(6);  // attaches the servo on pin 6 to the servo object
+  myservo.attach(13);  // attaches the servo on pin 13 to the servo object
 }
  
 void loop() {
@@ -34,7 +34,7 @@ void loop() {
   int sensorReading = analogRead(SPEED_CONTROL);
   Serial.println(sensorReading);
   // map it to a range from 0 to 100:
-  int motorSpeed = map(sensorReading, 0,1023, 5, 10);
+  int motorSpeed = map(sensorReading, 0,1023, 7, 10);
   Serial.println(motorSpeed);
 
   // set the motor speed:
@@ -49,7 +49,7 @@ void loop() {
   int pot = analogRead(interval);
   //Serial.println(pot);
   // map it to a range from 0 to 100:
-  int lendelay = map(pot, 0,1024, 7,80);
+  int lendelay = map(pot, 0,1024, 12,65);
   Serial.println(lendelay);
   // set the motor speed:
   if (lendelay > 0) {
@@ -61,7 +61,7 @@ void loop() {
     prev = current;
 
     if (rev==0){ 
-      if (pos==80) {
+      if (pos==50) {
         rev=1;
         pos-=1;
         //myservo.write(pos);
